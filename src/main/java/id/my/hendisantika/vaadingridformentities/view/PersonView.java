@@ -29,4 +29,8 @@ public class PersonView extends GenericView<Person> {
         this.dataService = dataService;
         refreshGrid();
     }
+
+    @Override
+    protected void saveEntity(Person entity) {
+    }
 }
