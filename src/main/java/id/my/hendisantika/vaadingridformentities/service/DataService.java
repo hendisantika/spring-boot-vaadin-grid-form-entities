@@ -41,4 +41,8 @@ public class DataService {
     public List<Person> findAllPersons() {
         return persons;
     }
+
+    public List<Address> findAllAddresses() {
+        return addresses;
+    }
 }
