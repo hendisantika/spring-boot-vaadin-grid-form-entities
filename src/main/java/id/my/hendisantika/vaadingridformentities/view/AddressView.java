@@ -6,6 +6,8 @@ import com.vaadin.flow.router.Route;
 import id.my.hendisantika.vaadingridformentities.entity.Address;
 import id.my.hendisantika.vaadingridformentities.ui.GenericView;
 
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * Project : spring-boot-vaadin-grid-form-entities
@@ -31,5 +33,10 @@ public class AddressView extends GenericView<Address> {
 
     @Override
     protected void saveEntity(Address entity) {
+    }
+
+    @Override
+    protected List<Address> loadEntities() {
+        return dataService.findAllAddresses();
     }
 }
