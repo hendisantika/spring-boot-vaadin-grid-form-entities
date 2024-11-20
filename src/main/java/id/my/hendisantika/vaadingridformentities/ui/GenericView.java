@@ -297,4 +297,8 @@ public abstract class GenericView<T extends BaseEntity> extends VerticalLayout {
     protected abstract void saveEntity(T entity);
 
     protected abstract List<T> loadEntities();
+
+    public void refreshGrid() {
+        grid.setItems(loadEntities());
+    }
 }
