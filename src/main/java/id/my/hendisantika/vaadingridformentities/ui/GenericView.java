@@ -316,4 +316,11 @@ public abstract class GenericView<T extends BaseEntity> extends VerticalLayout {
         // Optional: Scroll form into view or highlight it
         form.getElement().scrollIntoView();
     }
+
+    private void clearForm() {
+        selectedItem = null;
+        binder.readBean(null);
+        editor.setVisible(false);
+        delete.setVisible(false);
+    }
 }
