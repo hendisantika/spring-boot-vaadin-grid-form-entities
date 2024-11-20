@@ -306,4 +306,14 @@ public abstract class GenericView<T extends BaseEntity> extends VerticalLayout {
     private record GridColumnInfo(String propertyName, String header, int order, boolean sortable, Class<?> type,
                                   Method method, String dateTimeFormat) {
     }
+
+    public void addNew() {
+        editor.setVisible(true);
+        // Create empty instance
+        selectedItem = createEmptyInstance();
+        // Clear and set the binder
+        binder.readBean(selectedItem);
+        // Optional: Scroll form into view or highlight it
+        form.getElement().scrollIntoView();
+    }
 }
