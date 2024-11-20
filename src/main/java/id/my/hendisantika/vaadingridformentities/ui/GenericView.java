@@ -1,6 +1,7 @@
 package id.my.hendisantika.vaadingridformentities.ui;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
@@ -8,6 +9,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
+import com.vaadin.flow.component.textfield.NumberField;
 import id.my.hendisantika.vaadingridformentities.entity.base.BaseEntity;
 import id.my.hendisantika.vaadingridformentities.entity.base.FormField;
 
@@ -218,6 +220,40 @@ public abstract class GenericView<T extends BaseEntity> extends VerticalLayout {
         // Add buttons
         HorizontalLayout buttons = new HorizontalLayout(save, cancel);
         form.add(buttons);
+    }
+
+    private void setupFieldBinding(Field field, Component component) {
+        Class<?> type = field.getType();
+
+        if (component instanceof NumberField numberField) {
+            if (type == Integer.class || type == int.class) {
+                binder.forField(numberField)
+                        .withConverter(
+                                // Convert Double to Integer when saving to bean
+                                number -> number != null ? number.intValue() : null,
+                                // Convert Integer to Double when reading from bean
+                                integer -> integer != null ? integer.doubleValue() : null,
+                                // Error message if conversion fails
+                                "Please enter a valid number"
+                        )
+                        .bind(field.getName());
+            } else if (type == Double.class || type == double.class) {
+                binder.forField(numberField)
+                        .bind(field.getName());
+            } else if (type == Long.class || type == long.class) {
+                binder.forField(numberField)
+                        .withConverter(
+                                number -> number != null ? number.longValue() : null,
+                                longVal -> longVal != null ? longVal.doubleValue() : null,
+                                "Please enter a valid number"
+                        )
+                        .bind(field.getName());
+            }
+        } else {
+            // Handle other field types normally
+            binder.forField((HasValue) component)
+                    .bind(field.getName());
+        }
     }
 
 }
