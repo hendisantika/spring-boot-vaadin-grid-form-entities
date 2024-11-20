@@ -2,6 +2,7 @@ package id.my.hendisantika.vaadingridformentities.view;
 
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
+import com.vaadin.flow.component.html.Footer;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Header;
 import com.vaadin.flow.component.html.Span;
@@ -76,5 +77,11 @@ public class MainLayout extends AppLayout {
         });
 
         return nav;
+    }
+
+    private Footer createFooter() {
+        Footer layout = new Footer();
+
+        return layout;
     }
 }
