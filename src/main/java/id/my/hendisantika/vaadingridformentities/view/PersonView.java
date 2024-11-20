@@ -6,6 +6,8 @@ import com.vaadin.flow.router.Route;
 import id.my.hendisantika.vaadingridformentities.entity.Person;
 import id.my.hendisantika.vaadingridformentities.ui.GenericView;
 
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * Project : spring-boot-vaadin-grid-form-entities
@@ -32,5 +34,10 @@ public class PersonView extends GenericView<Person> {
 
     @Override
     protected void saveEntity(Person entity) {
+    }
+
+    @Override
+    protected List<Person> loadEntities() {
+        return dataService.findAllPersons();
     }
 }
