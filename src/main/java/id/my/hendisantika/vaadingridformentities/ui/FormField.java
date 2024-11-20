@@ -1,4 +1,4 @@
-package id.my.hendisantika.vaadingridformentities.entity.base;
+package id.my.hendisantika.vaadingridformentities.ui;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

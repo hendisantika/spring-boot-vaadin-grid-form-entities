@@ -1,5 +1,8 @@
 package id.my.hendisantika.vaadingridformentities.entity;
 
+import id.my.hendisantika.vaadingridformentities.entity.base.BaseEntity;
+import id.my.hendisantika.vaadingridformentities.ui.FormField;
+import id.my.hendisantika.vaadingridformentities.ui.GridColumn;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

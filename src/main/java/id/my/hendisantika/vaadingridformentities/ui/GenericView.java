@@ -15,7 +15,6 @@ import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import id.my.hendisantika.vaadingridformentities.entity.base.BaseEntity;
-import id.my.hendisantika.vaadingridformentities.entity.base.FormField;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
