@@ -49,6 +49,7 @@ public abstract class GenericView<T extends BaseEntity> extends VerticalLayout {
     private final Binder<T> binder;
     private final Div editor = new Div();
     private T selectedItem;
+    public final Div gridContainer = new Div();
 
     protected GenericView(Class<T> entityClass) {
         this.entityClass = entityClass;
@@ -299,6 +300,8 @@ public abstract class GenericView<T extends BaseEntity> extends VerticalLayout {
     protected abstract void saveEntity(T entity);
 
     protected abstract List<T> loadEntities();
+
+    protected abstract void deleteEntity(T entity);
 
     public void refreshGrid() {
         grid.setItems(loadEntities());
