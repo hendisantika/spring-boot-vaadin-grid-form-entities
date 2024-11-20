@@ -29,4 +29,7 @@ public class AddressView extends GenericView<Address> {
         refreshGrid();
     }
 
+    @Override
+    protected void saveEntity(Address entity) {
+    }
 }
