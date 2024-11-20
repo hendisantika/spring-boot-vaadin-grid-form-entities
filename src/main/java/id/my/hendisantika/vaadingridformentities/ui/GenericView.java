@@ -18,6 +18,7 @@ import id.my.hendisantika.vaadingridformentities.entity.base.BaseEntity;
 import id.my.hendisantika.vaadingridformentities.entity.base.FormField;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -300,5 +301,9 @@ public abstract class GenericView<T extends BaseEntity> extends VerticalLayout {
 
     public void refreshGrid() {
         grid.setItems(loadEntities());
+    }
+
+    private record GridColumnInfo(String propertyName, String header, int order, boolean sortable, Class<?> type,
+                                  Method method, String dateTimeFormat) {
     }
 }
