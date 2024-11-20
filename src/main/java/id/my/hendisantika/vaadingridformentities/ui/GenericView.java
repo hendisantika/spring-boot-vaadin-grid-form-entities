@@ -296,4 +296,5 @@ public abstract class GenericView<T extends BaseEntity> extends VerticalLayout {
     // Abstract methods to be implemented by specific views
     protected abstract void saveEntity(T entity);
 
+    protected abstract List<T> loadEntities();
 }
