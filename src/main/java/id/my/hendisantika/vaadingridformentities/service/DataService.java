@@ -1,5 +1,6 @@
 package id.my.hendisantika.vaadingridformentities.service;
 
+import id.my.hendisantika.vaadingridformentities.entity.Address;
 import id.my.hendisantika.vaadingridformentities.entity.Person;
 import org.springframework.stereotype.Service;
 
@@ -28,5 +29,12 @@ public class DataService {
                     LocalDate.of(1990, 1, 24)),
             new Person(4L, "Alice", "Williams", "alice.williams@example.com", true,
                     LocalDate.of(1985, 11, 23))
+    );
+
+    private final List<Address> addresses = List.of(
+            new Address(1L, "123 Main St", "New York", "USA", "10001"),
+            new Address(2L, "456 Elm St", "Los Angeles", "USA", "90001"),
+            new Address(3L, "789 Oak St", "Chicago", "USA", "60601"),
+            new Address(4L, "101 Park Ave", "Boston", "USA", "02111")
     );
 }
