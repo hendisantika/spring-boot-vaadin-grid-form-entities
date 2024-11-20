@@ -45,4 +45,14 @@ public class DataService {
     public List<Address> findAllAddresses() {
         return addresses;
     }
+
+    public void saveAddress(Address address) {
+        if (address.getAddressId() == null) {
+            Long newId = addresses.stream().mapToLong(Address::getAddressId).max().orElse(0L) + 1;
+            address.setAddressId(newId);
+            addresses.add(address);
+        } else {
+            addresses.replaceAll(a -> a.getAddressId().equals(address.getAddressId()) ? address : a);
+        }
+    }
 }
