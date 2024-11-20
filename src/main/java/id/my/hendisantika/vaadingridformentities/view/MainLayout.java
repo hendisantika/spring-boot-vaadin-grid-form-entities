@@ -84,4 +84,10 @@ public class MainLayout extends AppLayout {
 
         return layout;
     }
+
+    @Override
+    protected void afterNavigation() {
+        super.afterNavigation();
+        viewTitle.setText(getCurrentPageTitle());
+    }
 }
