@@ -9,8 +9,10 @@ import com.vaadin.flow.component.splitlayout.SplitLayout;
 import id.my.hendisantika.vaadingridformentities.entity.base.BaseEntity;
 
 import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -165,4 +167,29 @@ public abstract class GenericView<T extends BaseEntity> extends VerticalLayout {
                 Date.class.isAssignableFrom(type);
     }
 
+    private Object formatValue(Object value, GridColumnInfo columnInfo) {
+        if (value == null) return "";
+
+        if (!columnInfo.dateTimeFormat().isEmpty() && isTemporalType(columnInfo.type())) {
+            switch (value) {
+                case LocalDateTime localDateTime -> {
+                    return DateTimeFormatter
+                            .ofPattern(columnInfo.dateTimeFormat())
+                            .format(localDateTime);
+                }
+                case LocalDate localDate -> {
+                    return DateTimeFormatter
+                            .ofPattern(columnInfo.dateTimeFormat())
+                            .format(localDate);
+                }
+                case Date date -> {
+                    return new SimpleDateFormat(columnInfo.dateTimeFormat())
+                            .format(date);
+                }
+                default -> {
+                }
+            }
+        }
+        return value;
+    }
 }
