@@ -3,6 +3,9 @@ package id.my.hendisantika.vaadingridformentities.ui;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.checkbox.Checkbox;
+import com.vaadin.flow.component.datepicker.DatePicker;
+import com.vaadin.flow.component.datetimepicker.DateTimePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
@@ -10,6 +13,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.component.textfield.NumberField;
+import com.vaadin.flow.component.textfield.TextField;
 import id.my.hendisantika.vaadingridformentities.entity.base.BaseEntity;
 import id.my.hendisantika.vaadingridformentities.entity.base.FormField;
 
@@ -256,4 +260,20 @@ public abstract class GenericView<T extends BaseEntity> extends VerticalLayout {
         }
     }
 
+    private Component createFormField(Field field) {
+        Class<?> type = field.getType();
+        if (type == String.class) {
+            return new TextField();
+        } else if (type == Integer.class || type == int.class) {
+            return new NumberField();
+        } else if (type == Boolean.class || type == boolean.class) {
+            return new Checkbox();
+        } else if (type == LocalDateTime.class) {
+            return new DateTimePicker();
+        } else if (type == LocalDate.class) {
+            return new DatePicker();
+        }
+        // Add more field types as needed
+        return new TextField();
+    }
 }
