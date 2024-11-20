@@ -55,4 +55,8 @@ public class DataService {
             addresses.replaceAll(a -> a.getAddressId().equals(address.getAddressId()) ? address : a);
         }
     }
+
+    public void deleteAddress(Address address) {
+        addresses.removeIf(a -> a.getAddressId().equals(address.getAddressId()));
+    }
 }
