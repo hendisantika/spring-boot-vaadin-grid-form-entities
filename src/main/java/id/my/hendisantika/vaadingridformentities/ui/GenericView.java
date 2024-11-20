@@ -3,12 +3,15 @@ package id.my.hendisantika.vaadingridformentities.ui;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.checkbox.Checkbox;
+import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.datetimepicker.DateTimePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
@@ -72,12 +75,12 @@ public abstract class GenericView<T extends BaseEntity> extends VerticalLayout {
         form.getStyle().set("margin-left", "20px");
         editor.add(form);
         editor.setVisible(false);
+        gridContainer.add(grid);
 
         splitLayout.addToPrimary(grid);
         splitLayout.addToSecondary(editor);
 
         splitLayout.setSplitterPosition(80.0);
-
 
         add(splitLayout);
     }
@@ -224,6 +227,8 @@ public abstract class GenericView<T extends BaseEntity> extends VerticalLayout {
 
                 });
 
+        delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
+        delete.setVisible(false);  // Initially hidden until selection
         // Add buttons
         HorizontalLayout buttons = new HorizontalLayout(save, cancel);
         form.add(buttons);
@@ -293,6 +298,37 @@ public abstract class GenericView<T extends BaseEntity> extends VerticalLayout {
             selectedItem = null;
             binder.readBean(null);
             editor.setVisible(false);
+        });
+
+        delete.addClickListener(event -> {
+            if (selectedItem != null) {
+                // Create confirmation dialog
+                ConfirmDialog dialog = new ConfirmDialog();
+                dialog.setHeader("Confirm Delete");
+                dialog.setText("Are you sure you want to delete this item? This action cannot be undone.");
+
+                dialog.setCancelable(true);
+                dialog.setCancelText("Cancel");
+
+                dialog.setConfirmText("Delete");
+                dialog.setConfirmButtonTheme("error primary");
+
+                dialog.addConfirmListener(confirmEvent -> {
+                    deleteEntity(selectedItem);
+                    clearForm();
+                    refreshGrid();
+                    Notification.show("Item deleted", 3000, Notification.Position.TOP_CENTER);
+                });
+
+                dialog.open();
+            }
+        });
+
+        grid.asSingleSelect().addValueChangeListener(event -> {
+            selectedItem = event.getValue();
+            editor.setVisible(selectedItem != null);
+            delete.setVisible(selectedItem != null);
+            binder.readBean(selectedItem);
         });
     }
 

@@ -28,7 +28,6 @@ public class PersonView extends GenericView<Person> {
 
     private final DataService dataService;
 
-
     public PersonView(DataService dataService) {
         super(Person.class);
         this.dataService = dataService;
