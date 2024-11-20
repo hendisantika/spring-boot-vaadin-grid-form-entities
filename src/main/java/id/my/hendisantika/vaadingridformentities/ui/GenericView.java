@@ -276,4 +276,21 @@ public abstract class GenericView<T extends BaseEntity> extends VerticalLayout {
         // Add more field types as needed
         return new TextField();
     }
+
+    private void setupEventHandlers() {
+        save.addClickListener(event -> {
+            if (selectedItem != null && binder.writeBeanIfValid(selectedItem)) {
+                saveEntity(selectedItem);
+                refreshGrid();
+                editor.setVisible(false);
+            }
+        });
+
+        cancel.addClickListener(event -> {
+            selectedItem = null;
+            binder.readBean(null);
+            editor.setVisible(false);
+        });
+    }
+
 }
