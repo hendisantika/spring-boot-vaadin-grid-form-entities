@@ -46,6 +46,10 @@ public class DataService {
         return addresses;
     }
 
+    public void deletePerson(Person person) {
+        persons.removeIf(p -> p.getPersonId().equals(person.getPersonId()));
+    }
+
     public void saveAddress(Address address) {
         if (address.getAddressId() == null) {
             Long newId = addresses.stream().mapToLong(Address::getAddressId).max().orElse(0L) + 1;
