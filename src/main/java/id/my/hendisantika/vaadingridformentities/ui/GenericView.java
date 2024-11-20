@@ -45,6 +45,7 @@ public abstract class GenericView<T extends BaseEntity> extends VerticalLayout {
     private final Class<T> entityClass;
     private final Button save = new Button("Save");
     private final Button cancel = new Button("Cancel");
+    private final Button delete = new Button("Delete");
     private final Binder<T> binder;
     private final Div editor = new Div();
     private T selectedItem;
@@ -305,6 +306,14 @@ public abstract class GenericView<T extends BaseEntity> extends VerticalLayout {
 
     private record GridColumnInfo(String propertyName, String header, int order, boolean sortable, Class<?> type,
                                   Method method, String dateTimeFormat) {
+    }
+
+    protected T createEmptyInstance() {
+        try {
+            return entityClass.getDeclaredConstructor().newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException("Could not create empty instance of " + entityClass.getSimpleName(), e);
+        }
     }
 
     public void addNew() {
