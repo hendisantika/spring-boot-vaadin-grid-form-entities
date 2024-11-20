@@ -1,12 +1,15 @@
 package id.my.hendisantika.vaadingridformentities.ui;
 
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
 import id.my.hendisantika.vaadingridformentities.entity.base.BaseEntity;
+import id.my.hendisantika.vaadingridformentities.entity.base.FormField;
 
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
@@ -15,6 +18,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -192,4 +196,28 @@ public abstract class GenericView<T extends BaseEntity> extends VerticalLayout {
         }
         return value;
     }
+
+    private void setupForm() {
+        // Automatically add form fields based on FormField annotations
+        Arrays.stream(entityClass.getDeclaredFields())
+                .filter(field -> field.isAnnotationPresent(FormField.class))
+                .sorted(Comparator.comparingInt(field ->
+                        field.getAnnotation(FormField.class).order()))
+                .forEach(field -> {
+                    FormField annotation = field.getAnnotation(FormField.class);
+                    String label = annotation.label().isEmpty() ?
+                            field.getName() : annotation.label();
+
+                    Component component = createFormField(field);
+                    form.addFormItem(component, label);
+
+                    setupFieldBinding(field, component);
+
+                });
+
+        // Add buttons
+        HorizontalLayout buttons = new HorizontalLayout(save, cancel);
+        form.add(buttons);
+    }
+
 }
