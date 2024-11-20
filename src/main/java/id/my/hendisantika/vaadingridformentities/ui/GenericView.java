@@ -1,9 +1,11 @@
 package id.my.hendisantika.vaadingridformentities.ui;
 
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.splitlayout.SplitLayout;
 import id.my.hendisantika.vaadingridformentities.entity.base.BaseEntity;
 
 /**
@@ -36,5 +38,24 @@ public abstract class GenericView<T extends BaseEntity> extends VerticalLayout {
         setupGrid();
         setupForm();
         setupEventHandlers();
+    }
+
+    private void setupLayout() {
+        setSizeFull();
+
+        // Create a split layout for grid and form
+        SplitLayout splitLayout = new SplitLayout();
+        splitLayout.setSizeFull();
+        form.getStyle().set("margin-left", "20px");
+        editor.add(form);
+        editor.setVisible(false);
+
+        splitLayout.addToPrimary(grid);
+        splitLayout.addToSecondary(editor);
+
+        splitLayout.setSplitterPosition(80.0);
+
+
+        add(splitLayout);
     }
 }
