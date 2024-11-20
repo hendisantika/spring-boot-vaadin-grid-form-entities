@@ -41,4 +41,9 @@ public class PersonView extends GenericView<Person> {
     protected List<Person> loadEntities() {
         return dataService.findAllPersons();
     }
+
+    @Override
+    protected void deleteEntity(Person person) {
+        dataService.deletePerson(person);
+    }
 }
