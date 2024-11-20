@@ -37,4 +37,8 @@ public class DataService {
             new Address(3L, "789 Oak St", "Chicago", "USA", "60601"),
             new Address(4L, "101 Park Ave", "Boston", "USA", "02111")
     );
+
+    public List<Person> findAllPersons() {
+        return persons;
+    }
 }
