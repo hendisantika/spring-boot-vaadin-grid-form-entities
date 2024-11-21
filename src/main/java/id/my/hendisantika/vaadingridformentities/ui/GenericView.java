@@ -46,12 +46,12 @@ public abstract class GenericView<T extends BaseEntity> extends VerticalLayout {
     private final Grid<T> grid;
     private final FormLayout form;
     private final Class<T> entityClass;
+    private T selectedItem;
     private final Button save = new Button("Save");
     private final Button cancel = new Button("Cancel");
     private final Button delete = new Button("Delete");
     private final Binder<T> binder;
     private final Div editor = new Div();
-    private T selectedItem;
     public final Div gridContainer = new Div();
 
     protected GenericView(Class<T> entityClass) {
@@ -76,11 +76,11 @@ public abstract class GenericView<T extends BaseEntity> extends VerticalLayout {
         editor.add(form);
         editor.setVisible(false);
         gridContainer.add(grid);
-
-        splitLayout.addToPrimary(grid);
+        splitLayout.addToPrimary(gridContainer);
         splitLayout.addToSecondary(editor);
 
         splitLayout.setSplitterPosition(80.0);
+
 
         add(splitLayout);
     }
@@ -168,12 +168,6 @@ public abstract class GenericView<T extends BaseEntity> extends VerticalLayout {
                             .setSortable(columnInfo.sortable());
                 });
 
-        // Add selection listener
-        grid.asSingleSelect().addValueChangeListener(event -> {
-            selectedItem = event.getValue();
-            editor.setVisible(true);
-            binder.readBean(selectedItem);
-        });
     }
 
 
@@ -229,8 +223,7 @@ public abstract class GenericView<T extends BaseEntity> extends VerticalLayout {
 
         delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
         delete.setVisible(false);  // Initially hidden until selection
-        // Add buttons
-        HorizontalLayout buttons = new HorizontalLayout(save, cancel);
+        HorizontalLayout buttons = new HorizontalLayout(save, cancel, delete);
         form.add(buttons);
     }
 
@@ -290,14 +283,13 @@ public abstract class GenericView<T extends BaseEntity> extends VerticalLayout {
             if (selectedItem != null && binder.writeBeanIfValid(selectedItem)) {
                 saveEntity(selectedItem);
                 refreshGrid();
-                editor.setVisible(false);
+                // Clear form after successful save
+                clearForm();
             }
         });
 
         cancel.addClickListener(event -> {
-            selectedItem = null;
-            binder.readBean(null);
-            editor.setVisible(false);
+            clearForm();
         });
 
         delete.addClickListener(event -> {
@@ -343,9 +335,6 @@ public abstract class GenericView<T extends BaseEntity> extends VerticalLayout {
         grid.setItems(loadEntities());
     }
 
-    private record GridColumnInfo(String propertyName, String header, int order, boolean sortable, Class<?> type,
-                                  Method method, String dateTimeFormat) {
-    }
 
     protected T createEmptyInstance() {
         try {
@@ -370,5 +359,9 @@ public abstract class GenericView<T extends BaseEntity> extends VerticalLayout {
         binder.readBean(null);
         editor.setVisible(false);
         delete.setVisible(false);
+    }
+
+    private record GridColumnInfo(String propertyName, String header, int order, boolean sortable, Class<?> type,
+                                  Method method, String dateTimeFormat) {
     }
 }
