@@ -45,6 +45,7 @@ public class PersonView extends GenericView<Person> {
 
     @Override
     protected void saveEntity(Person entity) {
+        dataService.savePerson(entity);
     }
 
     @Override

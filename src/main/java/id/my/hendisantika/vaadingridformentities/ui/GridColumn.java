@@ -25,4 +25,6 @@ public @interface GridColumn {
     boolean sortable() default true;
 
     String dateTimeFormat() default "";
+
+    boolean showAsComponent() default false;
 }

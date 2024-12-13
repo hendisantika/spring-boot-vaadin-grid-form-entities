@@ -29,9 +29,9 @@ import java.util.List;
  * Time: 09.15
  * To change this template use File | Settings | File Templates.
  */
+@Slf4j
 @Layout
 @AnonymousAllowed
-@Slf4j
 public class MainLayout extends AppLayout {
 
     private H1 viewTitle;
@@ -61,6 +61,7 @@ public class MainLayout extends AppLayout {
 
         addToDrawer(header, scroller, createFooter());
     }
+
 
     private SideNav createNavigation() {
         SideNav nav = new SideNav();
