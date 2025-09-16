@@ -82,7 +82,7 @@
                     <plugin>
                         <groupId>com.vaadin</groupId>
                         <artifactId>vaadin-maven-plugin</artifactId>
-                        <version>24.8.8</version>
+                        <version>24.9.0</version>
                         <executions>
                             <execution>
                                 <id>frontend</id>
