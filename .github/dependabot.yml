@@ -1,13 +1,60 @@
 version: 2
 updates:
+  # Maven dependencies (pom.xml & Maven wrapper)
   - package-ecosystem: maven
     directory: "/"
     schedule:
       interval: daily
-      time: '05:00'
+      time: "05:00"
       timezone: Asia/Jakarta
     open-pull-requests-limit: 10
-  - package-ecosystem: "github-actions"
+    assignees:
+      - hendisantika
+    labels:
+      - dependencies
+      - java
+    commit-message:
+      prefix: "chore(deps)"
+      prefix-development: "chore(deps-dev)"
+      include: scope
+    groups:
+      spring-boot:
+        patterns:
+          - "org.springframework*"
+      vaadin:
+        patterns:
+          - "com.vaadin*"
+          - "org.parttio*"
+      test:
+        patterns:
+          - "org.junit*"
+          - "org.mockito*"
+          - "org.assertj*"
+      maven-plugins:
+        patterns:
+          - "org.apache.maven*"
+      lombok:
+        patterns:
+          - "org.projectlombok*"
+
+  # GitHub Actions used in workflows
+  - package-ecosystem: github-actions
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: weekly
+      day: monday
+      time: "05:00"
+      timezone: Asia/Jakarta
+    open-pull-requests-limit: 5
+    assignees:
+      - hendisantika
+    labels:
+      - dependencies
+      - github_actions
+    commit-message:
+      prefix: "ci(deps)"
+      include: scope
+    groups:
+      github-actions:
+        patterns:
+          - "*"
