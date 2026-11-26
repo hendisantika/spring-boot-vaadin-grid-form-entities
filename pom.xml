@@ -15,7 +15,7 @@
     <description>spring-boot-vaadin-grid-form-entities</description>
     <properties>
         <java.version>25</java.version>
-        <vaadin.version>25.3.5</vaadin.version>
+        <vaadin.version>25.3.6</vaadin.version>
     </properties>
     <dependencies>
         <dependency>
@@ -82,7 +82,7 @@
                     <plugin>
                         <groupId>com.vaadin</groupId>
                         <artifactId>vaadin-maven-plugin</artifactId>
-                        <version>25.3.5</version>
+                        <version>25.3.6</version>
                         <executions>
                             <execution>
                                 <id>frontend</id>
